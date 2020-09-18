@@ -1,33 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-
-public class PlayerMovement : MonoBehaviour
+﻿public class PlayerMovement : MonoBehaviour
 {
     //MOVING AROUND
-    Vector3 forward, right, moveDirection;
-    float xInput, yInput;
-    CharacterController cc;
     public GameObject cam;
     public float playerSpeed;
-    GameObject currentInteractable;
-    string interact_name;
+
+    Vector3 forward, right, moveDirection;
+    float xInput, yInput;  
+    Rigidbody rb;
+
+    //INTERACTABLES
     public Ingredient_Full holding;
     public Recipe holding_finished;
+
+    GameObject currentInteractable;
+    string interact_name;
+
+    //CENTRAL SYSTEMS
     public DebugInfoText debugText;
     public GameManager gm;
-    Rigidbody rb;
+
+    //TRUCK CONTROLS
     public Rigidbody truckRB;
     public GameObject camLook;
     public TruckDriver truckScript;
+
     bool truckMode = false;
+
+    //DISPLAY AND SOUND
     public GameObject viewCam;
     public GameObject holdingCanvas;
     public Image HoldingUI;
     public Sprite[] Food_UI;
     public AudioSource aud;
+
     void Start()
     {
         aud = GetComponent<AudioSource>();
@@ -38,12 +43,14 @@ public class PlayerMovement : MonoBehaviour
         holdingCanvas.SetActive(false);
         truckRB.centerOfMass = new Vector3(0, -2, 0);
     }
-    // Update is called once per frame
+
     void Update()
     {
-        if (!gm.paused) {
+        if (!gm.paused)
+        {
             if (!truckMode)
-            {
+            { 
+                //get directional movement vectors
                 forward = cam.transform.forward;
                 forward.y = 0;
                 right = cam.transform.right;
@@ -53,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
                 moveDirection = xInput * right + yInput * forward;
                 if (holding != null && !holdingCanvas.activeInHierarchy)
                 {
-                    Debug.Log("Holding UI!");
+                    //Debug.Log("Holding UI!");
                     holdingCanvas.SetActive(true);
                     //pick which image to display
                     //0 = top bun   1 = bottom bun  2 = cheese  3 = lettuce   4 = burger    5 = onion,whole
@@ -61,17 +68,39 @@ public class PlayerMovement : MonoBehaviour
                     //10 = mushroom, chopped
                     switch (holding.ingr)
                     {
-                        case Recipe.Ingredient.Top_Bun: HoldingUI.sprite = Food_UI[0]; break;
-                        case Recipe.Ingredient.Bottom_Bun: HoldingUI.sprite = Food_UI[1]; break;
-                        case Recipe.Ingredient.Cheese: HoldingUI.sprite = Food_UI[2]; break;
-                        case Recipe.Ingredient.Lettuce: HoldingUI.sprite = Food_UI[3]; break;
-                        case Recipe.Ingredient.Burger: HoldingUI.sprite = Food_UI[4]; break;
-                        case Recipe.Ingredient.Onion: HoldingUI.sprite = Food_UI[5]; break;
-                        case Recipe.Ingredient.Chopped_Onion: HoldingUI.sprite = Food_UI[6]; break;
-                        case Recipe.Ingredient.Tomato: HoldingUI.sprite = Food_UI[7]; break;
-                        case Recipe.Ingredient.Chopped_Tomato: HoldingUI.sprite = Food_UI[8]; break;
-                        case Recipe.Ingredient.Mushroom: HoldingUI.sprite = Food_UI[9]; break;
-                        case Recipe.Ingredient.Chopped_Mushroom: HoldingUI.sprite = Food_UI[10]; break;
+                        case Recipe.Ingredient.Top_Bun: 
+                            HoldingUI.sprite = Food_UI[0];
+                            break;
+                        case Recipe.Ingredient.Bottom_Bun: 
+                            HoldingUI.sprite = Food_UI[1]; 
+                            break;
+                        case Recipe.Ingredient.Cheese: 
+                            HoldingUI.sprite = Food_UI[2];
+                            break;
+                        case Recipe.Ingredient.Lettuce: 
+                            HoldingUI.sprite = Food_UI[3];
+                            break;
+                        case Recipe.Ingredient.Burger: 
+                            HoldingUI.sprite = Food_UI[4];
+                            break;
+                        case Recipe.Ingredient.Onion: 
+                            HoldingUI.sprite = Food_UI[5]; 
+                            break;
+                        case Recipe.Ingredient.Chopped_Onion: 
+                            HoldingUI.sprite = Food_UI[6];
+                            break;
+                        case Recipe.Ingredient.Tomato: 
+                            HoldingUI.sprite = Food_UI[7];
+                            break;
+                        case Recipe.Ingredient.Chopped_Tomato:
+                            HoldingUI.sprite = Food_UI[8]; 
+                            break;
+                        case Recipe.Ingredient.Mushroom:
+                            HoldingUI.sprite = Food_UI[9];
+                            break;
+                        case Recipe.Ingredient.Chopped_Mushroom: 
+                            HoldingUI.sprite = Food_UI[10];
+                            break;
                     }
                 }
 
@@ -104,12 +133,13 @@ public class PlayerMovement : MonoBehaviour
                 SceneManager.LoadScene("MainMenu");
             }
         }
-        
-        
+
+
     }
 
     private void FixedUpdate()
     {
+        //physics stuff.
         rb.velocity = playerSpeed * moveDirection + truckRB.velocity;
         if (moveDirection.magnitude > 0.1f)
         {
@@ -134,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentInteractable = other.gameObject;
             interact_name = other.gameObject.name;
-            if(other.gameObject.name == "PREP_TABLE1" || other.gameObject.name == "PREP_TABLE2")
+            if (other.gameObject.name == "PREP_TABLE1" || other.gameObject.name == "PREP_TABLE2")
             {
                 other.gameObject.GetComponent<PrepTable>().PullUpList();
             }
@@ -154,18 +184,18 @@ public class PlayerMovement : MonoBehaviour
     }
     public void submitRecipe()
     {
-        if(currentInteractable == null && holding != null)
+        if (currentInteractable == null && holding != null)
         {
             holding = null;
             holdingCanvas.SetActive(false);
             Debug.Log("Tossed!");
         }
-        else if(currentInteractable.name == "PREP_TABLE1")
+        else if (currentInteractable.name == "PREP_TABLE1")
         {
             Debug.Log("PREP TABLE 1 CHECK");
             gm.SubmitRecipe(1);
         }
-        else if(currentInteractable.name == "PREP_TABLE2")
+        else if (currentInteractable.name == "PREP_TABLE2")
         {
             Debug.Log("PREP TABLE 2 CHECK");
             gm.SubmitRecipe(2);
@@ -173,6 +203,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Interact()
     {
+        //there is, quite frankly, a lot of code here.
         //interact with anything you're nearby
         if (currentInteractable.CompareTag("Interactable_Pickup"))
         {
@@ -197,12 +228,13 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("You're already holding something!");
             }
         }
-        else if (currentInteractable.CompareTag("Interactable_Utility")){
+        else if (currentInteractable.CompareTag("Interactable_Utility"))
+        {
             if (holding != null)
             {
-                if(currentInteractable.name == "GRILL_L")
+                if (currentInteractable.name == "GRILL_L")
                 {
-                    if (currentInteractable.transform.parent.gameObject.GetComponent<Grill>().Interact_Place(holding,1))
+                    if (currentInteractable.transform.parent.gameObject.GetComponent<Grill>().Interact_Place(holding, 1))
                     {
                         holding = null;
                         holdingCanvas.SetActive(false);
@@ -212,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         //grill is full
                     }
-                    
+
                 }
                 else if (currentInteractable.name == "GRILL_R")
                 {
@@ -228,7 +260,7 @@ public class PlayerMovement : MonoBehaviour
                     }
 
                 }
-                else if(currentInteractable.name == "CHOP_TABLE")
+                else if (currentInteractable.name == "CHOP_TABLE")
                 {
                     if (currentInteractable.GetComponent<ChopTable>().Interact_Place(holding))
                     {
@@ -241,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
                         //chop table is full
                     }
                 }
-                else if(currentInteractable.name == "PREP_TABLE1" || currentInteractable.name == "PREP_TABLE2")
+                else if (currentInteractable.name == "PREP_TABLE1" || currentInteractable.name == "PREP_TABLE2")
                 {
                     if (currentInteractable.GetComponent<PrepTable>().Interact_Place(holding))
                     {
@@ -250,7 +282,7 @@ public class PlayerMovement : MonoBehaviour
                         aud.Play();
                     }
                 }
-                else if(currentInteractable.name == "DRIVER_SEAT" && gm.requestsDone > 0)
+                else if (currentInteractable.name == "DRIVER_SEAT" && gm.requestsDone > 0)
                 {
                     truckMode = true;
                     truckScript.truckMode = true;
@@ -301,10 +333,10 @@ public class PlayerMovement : MonoBehaviour
                         aud.Play();
                     }
                 }
-                else if(currentInteractable.name == "PREP_TABLE1" || currentInteractable.name == "PREP_TABLE2")
+                else if (currentInteractable.name == "PREP_TABLE1" || currentInteractable.name == "PREP_TABLE2")
                 {
                     holding = currentInteractable.GetComponent<PrepTable>().Interact_Take();
-                    if(holding == null)
+                    if (holding == null)
                     {
                         Debug.Log("Table was empty");
                     }
@@ -327,7 +359,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CameraModeSwitch()
     {
-        //TODO: IEnumerate this please.
+        //TODO: IEnumerate this please, if you have time (he didn't)
         if (truckMode)
         {
             //switch to truck position

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TruckDriver : MonoBehaviour
 {
+    /// <summary>
+    /// Unity Wheel Collider controller
+    /// </summary>
     public List<Axle> axles;
     public float maxTorque;
     public float maxSteer;

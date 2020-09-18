@@ -77,6 +77,7 @@ public class PrepTable : MonoBehaviour
 
     public Recipe ValidRecipeCheck(Cooking c)
     {
+        //check if the ingredients on the table create a recipe. Possible optimizations???
         foreach (Recipe r in c.gameRecipes.ToList())
         {
             r.score = 0;

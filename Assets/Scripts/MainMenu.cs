@@ -22,6 +22,7 @@ public class MainMenu : MonoBehaviour
     string[] h;
     void Start()
     {
+        //This was just a very large textbox which got put in the last few hours of the jam :)
         aud = GetComponent<AudioSource>();
         layout.SetActive(false);
         string[] htp = {"1- BASIC CONTROLS\nWASD/Left Stick -> Move\nA/Spacebar or Enter -> Interact\nB/Right Shift ->  Throw Item Away/Cancel",
@@ -35,10 +36,6 @@ public class MainMenu : MonoBehaviour
         "Controls: Left / Right - steer, B/RShift to exit truck mode\n\nYour first two burgers are untimed (save for the truck driving), so make sure to get a feel for everything!"};
 
         h = htp;
-
-
-
-
 
         positions[0] = new Vector2(182, -79);
         positions[1] = new Vector2(315, -285);

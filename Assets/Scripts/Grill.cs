@@ -21,22 +21,23 @@ public class Grill : MonoBehaviour
         RPanel.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!gm.paused)
         {
             if (L != null || R != null)
             {
+                //adjust the sizzling of the grill.
                 aud.volume = 1;
             }
             else
             {
                 aud.volume = 0;
             }
+
             if (L != null)
             {
-                L.cookValue++;
+                L.cookValue++; //frame based timer, NOTE: kind of wonky, perhaps use Time.deltaTime instead?
                 Left.color = textColorFunction(L.cookValue);
             }
             if (R != null)
@@ -51,6 +52,7 @@ public class Grill : MonoBehaviour
 
     public Ingredient_Full Interact_Take(int sideOfGrill)
     {
+        //same concept across the board for interactables- return the ingredient taken and remove it from that spot.
 
         if(sideOfGrill == 1)
         {
@@ -91,6 +93,7 @@ public class Grill : MonoBehaviour
 
     public Color textColorFunction(float val)
     {
+        //text coloration in the information boxes.
         if(val < 1000)
         {
             return new Color(1 - (val / 5000), 1, 1 - (val / 5000));
@@ -148,6 +151,7 @@ public class Grill : MonoBehaviour
 
     void DrawUI(int sideOfGrill)
     {
+        //draw the information textbox that sits above either side of the grill.
         if(sideOfGrill == 1)
         {
             if(L != null)

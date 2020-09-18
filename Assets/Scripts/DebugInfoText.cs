@@ -1,9 +1,11 @@
 ﻿using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
 
 public class DebugInfoText : MonoBehaviour
 {
+
+    /// <summary>
+    /// NOTE: scrapped code. Unused for now.
+    /// </summary>
     public Text t;
     public Text back;
 

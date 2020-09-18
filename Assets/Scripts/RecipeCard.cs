@@ -12,13 +12,6 @@ public class RecipeCard : MonoBehaviour
     {
         rt = GetComponent<RectTransform>();
         timer.text = "";
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void DrawRecipe(string recipeName, List<Recipe.Ingredient> ing)
@@ -32,17 +25,9 @@ public class RecipeCard : MonoBehaviour
 
     public IEnumerator SlideIntoPosition(Vector2 pos)
     {
+        //this shouldnt be an IEnum anymore???
         rt = GetComponent<RectTransform>();
         rt.anchoredPosition = pos;
-        /*
-        rt = GetComponent<RectTransform>();
-        rt.anchoredPosition = new Vector2(1116, 271);
-        for(int i = 0; i < 100; i++)
-        {
-            rt.anchoredPosition = new Vector2((rt.anchoredPosition.x - pos.x) * 0.01f, 271);
-            yield return new WaitForSeconds(0.01f);
-        }
-        */
         yield return new WaitForSeconds(0.1f);
     }
 

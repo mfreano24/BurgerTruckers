@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class death : MonoBehaviour
 {
+    /// <summary>
+    /// This is just a general death class that can be put on any object which can trigger death, so both the truck and the player.s
+    /// </summary>
     public GameManager gm;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {

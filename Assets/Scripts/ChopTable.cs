@@ -8,17 +8,12 @@ public class ChopTable : MonoBehaviour
     Ingredient_Full storage = null;
     public Text OnTable;
     public GameObject InfoCanvas;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         if(storage == null && InfoCanvas.activeInHierarchy)
         {
+            //if the information canvas happens to be on, turn it off.
             InfoCanvas.SetActive(false);
         }
     }
@@ -26,6 +21,7 @@ public class ChopTable : MonoBehaviour
 
     public Ingredient_Full Interact_Take()
     {
+        //take something, return the ingredient taken so that the player can hold it in their script.
         if(storage == null)
         {
             Debug.Log("There's nothing on the table.");
@@ -41,6 +37,8 @@ public class ChopTable : MonoBehaviour
 
     public bool Interact_Place(Ingredient_Full i)
     {
+        //pass in an ingredient (usually the held ingredient from the player)
+        //return a bool whether or not it was successful.
         if(storage == null)
         {
             Debug.Log("Chop chop!");

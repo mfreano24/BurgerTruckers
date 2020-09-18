@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
+    /// <summary>
+    /// Make things bob up and down, give the game some livelihood!
+    /// </summary>
     float yPos;
     int rando;
     void Start()
