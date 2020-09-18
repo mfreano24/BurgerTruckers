@@ -31,7 +31,6 @@ public class PrepTable : MonoBehaviour
 
     public bool Interact_Place(Ingredient_Full i)
     {
-        //TODO: DONT PUT FUCKING UNCHOPPED THINGS ON HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         Debug.Log("PLACED " + i.ingr);
         storage.Add(i);
         drawPrepList();
